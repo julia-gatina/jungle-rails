@@ -1,2 +1,19 @@
-<h1>Admin::Dashboard#show</h1>
-<p>Find me in app/views/admin/dashboard/show.html.erb</p>
+<h2 class="jumbotron">Admin Dashboard</h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Number of products:</h3>
+  </div>
+  <div class="panel-body link">
+    You have <%= @product_count %> Products
+    <%= link_to "Go to Products", products_url, class: 'btn btn-sm btn-primary' %>
+  </div>
+</div>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Number of categories:</h3>
+  </div>
+  <div class="panel-body link">
+    You have <%= @category_count %> Categories
+    <%= link_to "Go to Categories", '/categories/1', class: 'btn btn-sm btn-primary' %>
+  </div>
+</div>
