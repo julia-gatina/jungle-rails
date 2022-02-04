@@ -50,11 +50,10 @@
   </div>
 
     <% else %>
-      <a href="/products" >
         <div class="alert alert-warning" role="alert" font-size="1rem">
         There are no items in your cart. Please add something. 
         </div>
-      </a> 
+        <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
     <% end %>
 
 </section>
