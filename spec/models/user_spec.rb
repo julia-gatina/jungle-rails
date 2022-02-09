@@ -33,10 +33,38 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Name can't be blank")
     end  
 
+    it 'validates that password has minimum length when a user account is being created' do
+      @user = User.create(name: 'Julia', email: 'test@email.com', password: '12312', password_confirmation: '12312')
+      
+      expect(@user).to_not be_valid
+      expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+    end  
+
   end
 
   describe '.authenticate_with_credentials' do
-    # examples for this class method here
+    it 'does not allow user to log in if passowrd is wrong' do
+      @user = User.create(name: 'Julia', email: 'test@email.com', password: 'test123', password_confirmation: 'test123')
+      expect(User.authenticate_with_credentials('test@email.com', 'best123')).to be nil    
+    end
+
+    it 'allows user to log in if password matches' do
+      @user = User.create(name: 'Julia', email: 'test@email.com', password: 'test123', password_confirmation: 'test123')
+      expect(User.authenticate_with_credentials('test@email.com', 'test123')).to eq(@user)    
+    end
+
+    it 'allows user to log in if email has spaces' do
+      @user = User.create(name: 'Julia', email: 'test@email.com', password: 'test123', password_confirmation: 'test123')
+      expect(User.authenticate_with_credentials(' test@email.com ', 'test123')).to eq(@user)    
+    end
+
+    it 'allows user to log in if email has capital letters' do
+      @user = User.create(name: 'Julia', email: 'test@email.com', password: 'test123', password_confirmation: 'test123')
+      expect(User.authenticate_with_credentials('TEST@email.com', 'test123')).to eq(@user)    
+    end
+
+    
+
   end
 
   

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   validates :email, presence: true, :uniqueness => { :case_sensitive => false }
-  validates :password, presence: true, length: { minimum: 5 }
+  validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
   before_save :downcase_email
 
@@ -14,15 +14,14 @@ class User < ActiveRecord::Base
 
   def self.authenticate_with_credentials(email, password)
 
-    @email = email.downcase
-    @user = User.find_by_email(@email)
+    @email = email.strip
+    @downcase_email = @email.downcase
+    @user = User.find_by_email(@downcase_email)
 
     if BCrypt::Password.new(@user.password_digest) == password 
       return @user
     else
       return nil
+    end
   end
-end
-
-
 end
