@@ -38,4 +38,5 @@ class ApplicationController < ActionController::Base
     cookies[:cart]
   end
 
+  config.secret_key_base = '<%= ENV["SECRET_KEY_BASE"] %>'
 end
